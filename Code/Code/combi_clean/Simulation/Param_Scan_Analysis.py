@@ -1034,6 +1034,8 @@ if __name__ == "__main__":
     SCAN_RESULTS_DIRECTORY_Number_TWO = r"C:\Users\Gerard\Desktop\Parameter scan\3DParam_Scan_Roshan2"
 
 
+
+
     "This is used for multiple plots for different simulations (e.g. Appendix A)"
     # for i in range(NUMBER_OF_ITERATIONS_IL1RA):
     #
@@ -1071,10 +1073,10 @@ if __name__ == "__main__":
 
 
     # Call the new function to plot only IL-1RA
-    plot_aggregated_il1ra(SCAN_RESULTS_DIRECTORY)
-
-    # 2. Create the aggregated cytokine plot with SD
-    plot_aggregated_cytokines(SCAN_RESULTS_DIRECTORY)
-    plot_aggregated_cell_counts(SCAN_RESULTS_DIRECTORY)
+    # plot_aggregated_il1ra(SCAN_RESULTS_DIRECTORY)
+    #
+    # # 2. Create the aggregated cytokine plot with SD
+    # plot_aggregated_cytokines(SCAN_RESULTS_DIRECTORY)
+    # plot_aggregated_cell_counts(SCAN_RESULTS_DIRECTORY)
 
 
