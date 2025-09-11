@@ -1,0 +1,6 @@
+FiPy==3.4.4
+matplotlib==3.7.1
+numpy==1.25.1
+pandas==2.0.3
+scipy==1.10.1
+seaborn==0.13.1

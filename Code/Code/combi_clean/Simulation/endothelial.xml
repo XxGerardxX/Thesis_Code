@@ -1,0 +1,352 @@
+<CompuCell3D Revision="20210612" Version="4.2.5">
+   
+   <Metadata>
+      
+      <!-- Basic properties simulation -->
+      <NumberOfProcessors>12</NumberOfProcessors>
+      <DebugOutputFrequency>10000</DebugOutputFrequency>
+      <!-- <NonParallelModule Name="Potts"/> -->
+   </Metadata>
+
+  <Potts>
+   <!-- Reduced temperature for stability -->
+   <Dimensions x="50" y="50" z="50"/>
+   <Steps>280001</Steps>
+   <Temperature>90.0</Temperature>  <!-- Reduced from 100.0 -->
+   <NeighborOrder>3</NeighborOrder>  <!-- Increased for better neighbor detection -->
+   <Boundary_y>Periodic</Boundary_y>
+   <Boundary_x>Periodic</Boundary_x>
+   <Boundary_z>Periodic</Boundary_z>
+    </Potts>
+
+
+   <Plugin Name="CellType">
+
+      <!-- Listing all cell types in the simulation -->
+      <CellType TypeId="0" TypeName="Medium"/>
+      <CellType Freeze=""  TypeId="1" TypeName="endothelial"/>
+      <CellType TypeId="2" TypeName="neutrophil"/>
+      <CellType TypeId="3" TypeName="monocyte"/>
+      <CellType TypeId="4" TypeName="fibroblast"/>
+      <CellType Freeze="" TypeId="5" TypeName="neutrophila"/>
+      <CellType Freeze="" TypeId="6" TypeName="neutrophilnec"/>
+      <CellType TypeId="7" TypeName="mast"/>
+      <CellType TypeId="8" TypeName="macrophage1"/>
+      <CellType TypeId="9" TypeName="macrophage2"/>
+      <CellType TypeId="10" TypeName="keratino"/>
+      <CellType TypeId="11" TypeName="platelet"/>
+      <CellType Freeze="" TypeId="12" TypeName="necrotic"/>
+
+<!--       Temp was added to switch the endothelial cells to non-moving. However because endothelial cells do not visually secrete anything-->
+<!--       Temp was created to let them move for arpund 10 mcs and then make them endothelial cells. they have exactly the same properties-->
+<!--       but only the true endothelial cells secrete anything-->
+       <CellType TypeId="13" TypeName="temp"/>
+       <CellType TypeId="14" TypeName="nectemp"/>
+
+   </Plugin>
+
+   <Plugin Name="CenterOfMass">
+
+      <!-- Module tracking center of mass of each cell -->
+   </Plugin>
+
+   <Plugin Name="PixelTracker">
+
+      <!-- Module tracking pixels of each cell -->
+   </Plugin>
+
+
+    <Plugin Name="NeighborTracker"/>
+
+    <Plugin Name="Secretion"/>
+
+
+
+
+
+
+    <Plugin Name="Contact">
+   <!-- Balanced contact energies for burn injury simulation -->
+
+   <!-- Medium interactions (moderate adhesion) -->
+   <Energy Type1="Medium" Type2="Medium">10.0</Energy>
+   <Energy Type1="Medium" Type2="endothelial">3.0</Energy>
+   <Energy Type1="Medium" Type2="neutrophil">8.0</Energy>
+   <Energy Type1="Medium" Type2="monocyte">8.0</Energy>
+   <Energy Type1="Medium" Type2="fibroblast">3.0</Energy>
+   <Energy Type1="Medium" Type2="neutrophila">1.0</Energy>
+   <Energy Type1="Medium" Type2="neutrophilnec">1.0</Energy>
+   <Energy Type1="Medium" Type2="mast">9.0</Energy>
+   <Energy Type1="Medium" Type2="macrophage1">7.0</Energy>
+   <Energy Type1="Medium" Type2="macrophage2">7.0</Energy>
+   <Energy Type1="Medium" Type2="keratino">3.0</Energy>
+   <Energy Type1="Medium" Type2="platelet">8.0</Energy>
+   <Energy Type1="Medium" Type2="necrotic">7.0</Energy>
+    <Energy Type1="Medium" Type2="temp">6.0</Energy>
+    <Energy Type1="Medium" Type2="nectemp">6.0</Energy>
+
+   <!-- Cell-cell interactions (realistic adhesion values) -->
+   <!-- Endothelial cell interactions -->
+   <Energy Type1="endothelial" Type2="endothelial">2.0</Energy>
+   <Energy Type1="endothelial" Type2="neutrophil">8.0</Energy>
+   <Energy Type1="endothelial" Type2="monocyte">7.0</Energy>
+   <Energy Type1="endothelial" Type2="fibroblast">4.0</Energy>
+   <Energy Type1="endothelial" Type2="neutrophila">4.0</Energy>
+   <Energy Type1="endothelial" Type2="neutrophilnec">2.0</Energy>
+   <Energy Type1="endothelial" Type2="mast">6.0</Energy>
+   <Energy Type1="endothelial" Type2="macrophage1">7.0</Energy>
+   <Energy Type1="endothelial" Type2="macrophage2">7.0</Energy>
+   <Energy Type1="endothelial" Type2="keratino">3.0</Energy>
+   <Energy Type1="endothelial" Type2="platelet">4.0</Energy>
+   <Energy Type1="endothelial" Type2="necrotic">2.5</Energy>
+
+   <!-- Neutrophil interactions -->
+   <Energy Type1="neutrophil" Type2="monocyte">5.0</Energy>
+   <Energy Type1="neutrophil" Type2="fibroblast">8.0</Energy>
+   <Energy Type1="neutrophil" Type2="neutrophila">4.0</Energy>
+   <Energy Type1="neutrophil" Type2="neutrophilnec">4.0</Energy>
+   <Energy Type1="neutrophil" Type2="mast">4.0</Energy>
+   <Energy Type1="neutrophil" Type2="macrophage1">4.0</Energy>
+   <Energy Type1="neutrophil" Type2="macrophage2">4.0</Energy>
+   <Energy Type1="neutrophil" Type2="keratino">3.0</Energy>
+   <Energy Type1="neutrophil" Type2="platelet">5.0</Energy>
+   <Energy Type1="neutrophil" Type2="necrotic">5.0</Energy>
+<!--   <Energy Type1="neutrophil" Type2="neutrophil">2.0</Energy>-->
+
+        <!--    moncoyte cell interaction-->
+   <Energy Type1="monocyte" Type2="endothelial">2.0</Energy>
+   <Energy Type1="monocyte" Type2="neutrophil">8.0</Energy>
+   <Energy Type1="monocyte" Type2="fibroblast">4.0</Energy>
+   <Energy Type1="monocyte" Type2="neutrophila">9.0</Energy>
+   <Energy Type1="monocyte" Type2="neutrophilnec">12.0</Energy>
+   <Energy Type1="monocyte" Type2="mast">6.0</Energy>
+   <Energy Type1="monocyte" Type2="keratino">3.0</Energy>
+   <Energy Type1="monocyte" Type2="platelet">3.0</Energy>
+<!--   <Energy Type1="monocyte" Type2="monocyte">7.0</Energy>-->
+<!--   <Energy Type1="monocyte" Type2="macrophage1">7.0</Energy>-->
+<!--   <Energy Type1="monocyte" Type2="macrophage2">7.0</Energy>-->
+
+       <!-- Fibroblast interactions -->
+   <Energy Type1="fibroblast" Type2="neutrophil">3.0</Energy>
+   <Energy Type1="fibroblast" Type2="monocyte">5.0</Energy>
+   <Energy Type1="fibroblast" Type2="fibroblast">8.0</Energy>
+   <Energy Type1="fibroblast" Type2="neutrophila">2.0</Energy>
+   <Energy Type1="fibroblast" Type2="neutrophilnec">6.0</Energy>
+   <Energy Type1="fibroblast" Type2="mast">7.0</Energy>
+   <Energy Type1="fibroblast" Type2="macrophage1">4.0</Energy>
+   <Energy Type1="fibroblast" Type2="macrophage2">4.0</Energy>
+   <Energy Type1="fibroblast" Type2="platelet">5.0</Energy>
+   <Energy Type1="fibroblast" Type2="necrotic">10.0</Energy>
+   <!--   <Energy Type1="fibroblast" Type2="keratino">9.0</Energy>-->
+
+<!-- Apoptotic Neutrophil cell interactions -->
+   <Energy Type1="neutrophila" Type2="endothelial">2.0</Energy>
+   <Energy Type1="neutrophila" Type2="neutrophil">2.0</Energy>
+   <Energy Type1="neutrophila" Type2="monocyte">2.0</Energy>
+   <Energy Type1="neutrophila" Type2="fibroblast">2.0</Energy>
+   <Energy Type1="neutrophila" Type2="neutrophila">2.0</Energy>
+   <Energy Type1="neutrophila" Type2="neutrophilnec">2.0</Energy>
+   <Energy Type1="neutrophila" Type2="mast">2.0</Energy>
+   <Energy Type1="neutrophila" Type2="macrophage1">2.0</Energy>
+   <Energy Type1="neutrophila" Type2="macrophage2">2.0</Energy>
+   <Energy Type1="neutrophila" Type2="keratino">2.0</Energy>
+   <Energy Type1="neutrophila" Type2="platelet">2.0</Energy>
+   <Energy Type1="neutrophila" Type2="necrotic">2.0</Energy>
+
+        <!-- Necrotic Neutrophil cell interactions -->
+   <Energy Type1="neutrophilnec" Type2="endothelial">2.0</Energy>
+   <Energy Type1="neutrophilnec" Type2="neutrophil">2.0</Energy>
+   <Energy Type1="neutrophilnec" Type2="monocyte">2.0</Energy>
+   <Energy Type1="neutrophilnec" Type2="fibroblast">2.0</Energy>
+   <Energy Type1="neutrophilnec" Type2="neutrophila">2.0</Energy>
+   <Energy Type1="neutrophilnec" Type2="neutrophilnec">2.0</Energy>
+   <Energy Type1="neutrophilnec" Type2="mast">2.0</Energy>
+   <Energy Type1="neutrophilnec" Type2="macrophage1">2.0</Energy>
+   <Energy Type1="neutrophilnec" Type2="macrophage2">2.0</Energy>
+   <Energy Type1="neutrophilnec" Type2="keratino">2.0</Energy>
+   <Energy Type1="neutrophilnec" Type2="platelet">2.0</Energy>
+   <Energy Type1="neutrophilnec" Type2="necrotic">2.0</Energy>
+
+
+           <!-- Mast cell interactions -->
+   <Energy Type1="mast" Type2="endothelial">3.0</Energy>
+   <Energy Type1="mast" Type2="neutrophil">8.0</Energy>
+   <Energy Type1="mast" Type2="monocyte">7.0</Energy>
+   <Energy Type1="mast" Type2="fibroblast">5.0</Energy>
+   <Energy Type1="mast" Type2="neutrophila">4.0</Energy>
+   <Energy Type1="mast" Type2="neutrophilnec">2.0</Energy>
+   <Energy Type1="mast" Type2="macrophage1">7.0</Energy>
+   <Energy Type1="mast" Type2="macrophage2">7.0</Energy>
+   <Energy Type1="mast" Type2="keratino">3.0</Energy>
+   <Energy Type1="mast" Type2="platelet">5.0</Energy>
+   <Energy Type1="mast" Type2="necrotic">1.0</Energy>
+
+
+        <!-- Keratinocyte interactions -->
+   <Energy Type1="keratino" Type2="endothelial">3.0</Energy>
+   <Energy Type1="keratino" Type2="neutrophil">8.0</Energy>
+   <Energy Type1="keratino" Type2="monocyte">7.0</Energy>
+   <Energy Type1="keratino" Type2="fibroblast">5.0</Energy>
+   <Energy Type1="keratino" Type2="neutrophila">4.0</Energy>
+   <Energy Type1="keratino" Type2="neutrophilnec">2.0</Energy>
+   <Energy Type1="keratino" Type2="mast">3.0</Energy>
+   <Energy Type1="keratino" Type2="macrophage1">7.0</Energy>
+   <Energy Type1="keratino" Type2="macrophage2">7.0</Energy>
+   <Energy Type1="keratino" Type2="keratino">3.0</Energy>
+   <Energy Type1="keratino" Type2="platelet">5.0</Energy>
+   <Energy Type1="keratino" Type2="necrotic">1.0</Energy>
+
+
+
+<!-- Platelet cell interactions -->
+   <Energy Type1="platelet" Type2="endothelial">2.0</Energy>
+   <Energy Type1="platelet" Type2="neutrophil">8.0</Energy>
+   <Energy Type1="platelet" Type2="monocyte">7.0</Energy>
+   <Energy Type1="platelet" Type2="fibroblast">4.0</Energy>
+   <Energy Type1="platelet" Type2="neutrophila">9.0</Energy>
+   <Energy Type1="platelet" Type2="neutrophilnec">12.0</Energy>
+   <Energy Type1="platelet" Type2="mast">6.0</Energy>
+   <Energy Type1="platelet" Type2="macrophage1">7.0</Energy>
+   <Energy Type1="platelet" Type2="macrophage2">7.0</Energy>
+   <Energy Type1="platelet" Type2="keratino">3.0</Energy>
+   <Energy Type1="platelet" Type2="necrotic">15.0</Energy>
+<!--   <Energy Type1="platelet" Type2="platelet">4.0</Energy>-->
+
+        <!--    M1 Macrophage cell interaction-->
+   <Energy Type1="macrophage1" Type2="endothelial">5.0</Energy>
+   <Energy Type1="macrophage1" Type2="neutrophil">4.0</Energy>
+   <Energy Type1="macrophage1" Type2="monocyte">7.0</Energy>
+   <Energy Type1="macrophage1" Type2="fibroblast">20.0</Energy>
+   <Energy Type1="macrophage1" Type2="neutrophila">9.0</Energy>
+   <Energy Type1="macrophage1" Type2="neutrophilnec">3.0</Energy>
+   <Energy Type1="macrophage1" Type2="mast">6.0</Energy>
+   <Energy Type1="macrophage1" Type2="keratino">3.0</Energy>
+   <Energy Type1="macrophage1" Type2="platelet">3.0</Energy>
+   <Energy Type1="macrophage1" Type2="necrotic">4.0</Energy>
+   <Energy Type1="macrophage1" Type2="macrophage2">6.0</Energy>
+
+            <!--    M1 Macrophage cell interaction-->
+   <Energy Type1="macrophage2" Type2="endothelial">5.0</Energy>
+   <Energy Type1="macrophage2" Type2="neutrophil">4.0</Energy>
+   <Energy Type1="macrophage2" Type2="monocyte">7.0</Energy>
+   <Energy Type1="macrophage2" Type2="fibroblast">14.0</Energy>
+   <Energy Type1="macrophage2" Type2="neutrophila">9.0</Energy>
+   <Energy Type1="macrophage2" Type2="neutrophilnec">7.0</Energy>
+   <Energy Type1="macrophage2" Type2="mast">6.0</Energy>
+   <Energy Type1="macrophage2" Type2="keratino">3.0</Energy>
+   <Energy Type1="macrophage1" Type2="platelet">3.0</Energy>
+   <Energy Type1="macrophage2" Type2="necrotic">5.0</Energy>
+   <Energy Type1="macrophage2" Type2="macrophage1">6.0</Energy>
+
+
+        <!-- Necrotic interactions -->
+   <Energy Type1="necrotic" Type2="endothelial">2.0</Energy>
+   <Energy Type1="necrotic" Type2="neutrophil">2.0</Energy>
+   <Energy Type1="necrotic" Type2="monocyte">2.0</Energy>
+   <Energy Type1="necrotic" Type2="fibroblast">2.0</Energy>
+   <Energy Type1="necrotic" Type2="neutrophila">2.0</Energy>
+   <Energy Type1="necrotic" Type2="neutrophilnec">2.0</Energy>
+   <Energy Type1="necrotic" Type2="mast">2.0</Energy>
+   <Energy Type1="necrotic" Type2="macrophage1">2.0</Energy>
+   <Energy Type1="necrotic" Type2="macrophage2">2.0</Energy>
+   <Energy Type1="necrotic" Type2="keratino">2.0</Energy>
+   <Energy Type1="necrotic" Type2="platelet">2.0</Energy>
+
+
+
+   <!-- Key tissue repair interactions -->
+   <Energy Type1="monocyte" Type2="macrophage1">10.0</Energy>
+   <Energy Type1="monocyte" Type2="macrophage2">10.0</Energy>
+   <Energy Type1="fibroblast" Type2="keratino">1.0</Energy>
+   <Energy Type1="platelet" Type2="endothelial">3.0</Energy>
+   <Energy Type1="necrotic" Type2="necrotic">1.0</Energy>
+
+   <!-- Set remaining interactions to moderate values (6.0-8.0) -->
+   <Energy Type1="monocyte" Type2="monocyte">4.0</Energy>
+   <Energy Type1="fibroblast" Type2="fibroblast">4.0</Energy>
+   <Energy Type1="macrophage1" Type2="macrophage1">8.0</Energy>
+   <Energy Type1="macrophage2" Type2="macrophage2">7.0</Energy>
+   <Energy Type1="keratino" Type2="keratino">4.0</Energy>
+   <Energy Type1="platelet" Type2="platelet">2.0</Energy>
+   <Energy Type1="mast" Type2="mast">3.0</Energy>
+   <Energy Type1="necrotic" Type2="necrotic">4.0</Energy>
+   <Energy Type1="neutrophil" Type2="neutrophil">6.0</Energy>
+    <Energy Type1="temp" Type2="temp">4.0</Energy>
+    <Energy Type1="temp" Type2="nectemp">4.0</Energy>
+
+   <NeighborOrder>3</NeighborOrder>
+   </Plugin>
+
+   <Plugin Name="Volume">
+   <!-- Increased lambda values for better volume maintenance -->
+
+<!--       endothelial volume of around 1000-->
+       <VolumeEnergyParameters CellType="endothelial" LambdaVolume="30.0" TargetVolume="25"/>
+
+<!--       neutrophil volume of around 300-->
+       <VolumeEnergyParameters CellType="neutrophil" LambdaVolume="30.0" TargetVolume="20"/>
+       <VolumeEnergyParameters CellType="neutrophila" LambdaVolume="30.0" TargetVolume="20"/>
+       <VolumeEnergyParameters CellType="neutrophilnec" LambdaVolume="30.0" TargetVolume="20"/>
+
+<!--       monocyte volume of around 3000-->
+       <VolumeEnergyParameters CellType="monocyte" LambdaVolume="30.0" TargetVolume="30"/>
+
+<!--       fibroblast volume of around 1600-->
+       <VolumeEnergyParameters CellType="fibroblast" LambdaVolume="30.0" TargetVolume="25"/>
+
+<!--       mast cell volume of around 1400-->
+       <VolumeEnergyParameters CellType="mast" LambdaVolume="30.0" TargetVolume="23"/>
+
+<!--       macrophage volume of around 5000-->
+       <VolumeEnergyParameters CellType="macrophage1" LambdaVolume="25.0" TargetVolume="35"/>
+       <VolumeEnergyParameters CellType="macrophage2" LambdaVolume="25.0" TargetVolume="35"/>
+
+<!--       keratinocyte volume of around 1000-4000-->
+       <VolumeEnergyParameters CellType="keratino" LambdaVolume="30.0" TargetVolume="25"/>
+
+<!--       platelet volume of around 8 so these are groups of platelets-->
+       <VolumeEnergyParameters CellType="platelet" LambdaVolume="25.0" TargetVolume="18"/>
+
+       <VolumeEnergyParameters CellType="necrotic" LambdaVolume="30.0" TargetVolume="25"/>
+       <VolumeEnergyParameters CellType="temp" LambdaVolume="30.0" TargetVolume="25"/>
+       <VolumeEnergyParameters CellType="nectemp" LambdaVolume="30.0" TargetVolume="25"/>
+    </Plugin>
+
+    <Plugin Name="Surface">
+       <!-- Enhanced surface constraints -->
+       <SurfaceEnergyParameters CellType="endothelial" LambdaSurface="1.0" TargetSurface="22"/>
+       <SurfaceEnergyParameters CellType="neutrophil" LambdaSurface="2.0" TargetSurface="18"/>
+       <SurfaceEnergyParameters CellType="monocyte" LambdaSurface="1.5" TargetSurface="28"/>
+       <SurfaceEnergyParameters CellType="fibroblast" LambdaSurface="2.0" TargetSurface="24"/>
+       <SurfaceEnergyParameters CellType="neutrophila" LambdaSurface="3.2" TargetSurface="19"/>
+       <SurfaceEnergyParameters CellType="neutrophilnec" LambdaSurface="3.2" TargetSurface="19"/>
+       <SurfaceEnergyParameters CellType="mast" LambdaSurface="1.5" TargetSurface="24"/>
+       <SurfaceEnergyParameters CellType="macrophage1" LambdaSurface="1.0" TargetSurface="23"/>
+       <SurfaceEnergyParameters CellType="macrophage2" LambdaSurface="1.0" TargetSurface="23"/>
+       <SurfaceEnergyParameters CellType="keratino" LambdaSurface="5.0" TargetSurface="22"/>
+       <SurfaceEnergyParameters CellType="platelet" LambdaSurface="6.0" TargetSurface="15"/>
+       <SurfaceEnergyParameters CellType="necrotic" LambdaSurface="0.7" TargetSurface="22"/>
+
+        <SurfaceEnergyParameters CellType="temp" LambdaSurface="1.0" TargetSurface="22"/>
+        <SurfaceEnergyParameters CellType="nectemp" LambdaSurface="0.7" TargetSurface="22"/>
+    </Plugin>
+
+
+
+  
+
+
+   <Steppable Type="DiffusionSolverFE">      
+      <DiffusionField Name="cytokine">
+         <DiffusionData>
+            <FieldName>cytokine</FieldName>
+            <GlobalDiffusionConstant>0.0</GlobalDiffusionConstant>
+            <GlobalDecayConstant>0</GlobalDecayConstant>
+         </DiffusionData>         
+      </DiffusionField>
+   </Steppable>
+    <Plugin Name="Chemotaxis">
+      <ChemicalField Name="cytokine"></ChemicalField>
+   </Plugin>
+   
+</CompuCell3D>
