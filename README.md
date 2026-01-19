@@ -16,3 +16,5 @@ The primary objective is to observe and quantify how chemotactic signals, combin
 - **Data Collection:** Automatically logs key metrics like the center of mass for each cell type and inter-cell contact areas over time.
 - **Automated Simulation Runs:** Includes a helper script to run batches of simulations with varying parameters.
 - **Data Analysis & Visualization:** Provides Python scripts to parse the output data and generate plots for analysis.
+
+P.S. I'm sorry that the code is not that organized (e.g. the folder Code/Code which does NOT help with the clarity ofcourse). Furthermore there are some files through eachother which makes it harder to read. THere were 2 things that lead to this descision. The first one is that the modelling package called CompuCell3D does work in certain ways but does not in other ways. In this way, it worked. Secondary to this is the fact that I wanted to be done with my thesis. Thanks for checking it out!
